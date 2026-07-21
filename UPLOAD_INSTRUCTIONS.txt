@@ -1,0 +1,1 @@
+Upload index.html and 404.html to the repository root, then enable GitHub Pages from main / root. No _next folder is required.

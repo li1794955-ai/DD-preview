@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LILI LI | Visual Design Portfolio</title>
-  <meta name="description" content="LILI LI 视觉传达设计师作品集预览版" />
+  <title>李栋 | Visual Design Portfolio</title>
+  <meta name="description" content="李栋 视觉传达设计师作品集预览版" />
   <style>
     :root {
       --paper: #F5F2EC;
@@ -18,6 +18,8 @@
       --overlay-bg: #171A18;
       --overlay-line: #747C76;
       --overlay-text: #F1EEE7;
+      --glow-core: #F6F4EF;
+      --glow-edge: rgba(164, 200, 223, 0.85);
       --max-width: 1180px;
       --shadow: 0 16px 50px rgba(40, 48, 44, 0.08);
     }
@@ -47,7 +49,7 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      transition: opacity .6s ease, visibility .6s ease;
+      transition: opacity .75s ease, visibility .75s ease;
     }
     .startup-overlay::before {
       content: "";
@@ -65,7 +67,9 @@
     .startup-frame-v,
     .startup-grid-h,
     .startup-grid-v,
-    .startup-copy {
+    .startup-copy,
+    .startup-prof,
+    .startup-enter {
       opacity: 0;
     }
     .startup-frame-h,
@@ -94,16 +98,166 @@
     }
     .startup-frame-left { left: 6vw; }
     .startup-frame-right { right: 6vw; animation-delay: .16s; }
-    .startup-copy {
+
+    .startup-center {
       position: relative;
-      z-index: 1;
+      z-index: 3;
+      width: min(86vw, 980px);
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       text-align: center;
-      padding: 24px;
+      padding: 30px 24px 90px;
+    }
+    .startup-copy {
       animation: copyIn .9s ease forwards;
     }
-    .startup-copy.kicker { color: var(--overlay-line); font-size: 11px; letter-spacing: .36em; text-transform: uppercase; animation-delay: .52s; }
-    .startup-copy.name { font-size: clamp(46px, 9vw, 120px); font-weight: 600; letter-spacing: -.04em; line-height: .95; animation-delay: .72s; }
-    .startup-copy.sub { color: #b8bab4; font-size: 13px; letter-spacing: .22em; text-transform: uppercase; animation-delay: .96s; }
+    .startup-copy.kicker { color: var(--overlay-line); font-size: 11px; letter-spacing: .36em; text-transform: uppercase; animation-delay: .52s; margin-bottom: 18px; }
+    .startup-copy.name-cn { font-size: clamp(54px, 9.5vw, 124px); font-weight: 600; letter-spacing: -.08em; line-height: .95; animation-delay: .72s; }
+    .startup-copy.name-en { font-size: clamp(22px, 3vw, 38px); font-weight: 300; letter-spacing: .22em; text-transform: uppercase; color: #d8d5cd; animation-delay: .9s; margin-top: 12px; }
+    .startup-prof {
+      animation: copyIn .85s ease 1.12s forwards;
+      margin-top: 22px;
+      color: #b8bab4;
+      font-size: 14px;
+      line-height: 1.85;
+      letter-spacing: .12em;
+    }
+    .startup-enter {
+      animation: copyIn .85s ease 1.3s forwards;
+      position: absolute;
+      right: clamp(52px, 16vw, 180px);
+      bottom: clamp(46px, 12vh, 100px);
+      text-align: center;
+      color: var(--overlay-line);
+    }
+    .startup-enter-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .28em;
+      margin-top: 18px;
+    }
+    .startup-enter-sub {
+      font-size: 11px;
+      margin-top: 6px;
+      letter-spacing: .14em;
+      color: #9ba39d;
+    }
+
+    .entry-orb-wrap {
+      position: relative;
+      width: 82px;
+      height: 82px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .entry-orb-ring,
+    .entry-orb-ring-2 {
+      position: absolute;
+      inset: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 1px solid rgba(180, 193, 202, 0.24);
+      pointer-events: none;
+    }
+    .entry-orb-ring {
+      width: 82px;
+      height: 82px;
+      animation: orbRing 2.8s ease-in-out infinite;
+    }
+    .entry-orb-ring-2 {
+      width: 58px;
+      height: 58px;
+      animation: orbRing 2.4s ease-in-out .8s infinite;
+    }
+    .entry-orb {
+      position: relative;
+      z-index: 2;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 0;
+      cursor: pointer;
+      background: radial-gradient(circle at 35% 35%, var(--glow-core) 0%, rgba(241,238,231,0.94) 25%, rgba(186, 215, 235, 0.78) 46%, rgba(129, 167, 187, 0.36) 68%, rgba(129, 167, 187, 0.02) 100%);
+      box-shadow: 0 0 10px rgba(238,238,238,.95), 0 0 26px rgba(161, 193, 221, .62), 0 0 58px rgba(161, 193, 221, .24);
+      animation: orbPulse 2.8s ease-in-out infinite;
+    }
+    .entry-orb::before,
+    .entry-orb::after {
+      content: "";
+      position: absolute;
+      inset: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .entry-orb::before {
+      width: 34px;
+      height: 34px;
+      background: radial-gradient(circle, rgba(187,217,236,.28) 0%, rgba(187,217,236,.09) 40%, rgba(187,217,236,0) 72%);
+      animation: orbAura 2.8s ease-in-out infinite;
+    }
+    .entry-orb::after {
+      width: 2px;
+      height: 2px;
+      background: rgba(255,255,255,.85);
+      box-shadow: 15px -7px 0 rgba(255,255,255,.16), -14px 11px 0 rgba(196,221,235,.12), -10px -12px 0 rgba(255,255,255,.1), 11px 14px 0 rgba(196,221,235,.14);
+      animation: orbDust 4s linear infinite;
+    }
+    .orb-burst {
+      position: absolute;
+      inset: 50%;
+      transform: translate(-50%, -50%) scale(0.2);
+      width: 24px;
+      height: 24px;
+      opacity: 0;
+      pointer-events: none;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.55) 0%, rgba(194,219,237,0.36) 32%, rgba(194,219,237,0.18) 52%, rgba(194,219,237,0.04) 70%, rgba(194,219,237,0) 100%);
+    }
+    .spark {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 2px;
+      height: 2px;
+      border-radius: 50%;
+      opacity: 0;
+      background: rgba(240, 245, 249, .92);
+      box-shadow: 0 0 8px rgba(195,219,237,.78);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+    }
+    .startup-overlay.activated .entry-orb,
+    .startup-overlay.activated .entry-orb-ring,
+    .startup-overlay.activated .entry-orb-ring-2,
+    .startup-overlay.activated .startup-enter-label,
+    .startup-overlay.activated .startup-enter-sub {
+      opacity: 0;
+      transition: opacity .25s ease;
+    }
+    .startup-overlay.activated .orb-burst {
+      animation: burstExpand .78s cubic-bezier(.12,.78,.12,1) forwards;
+    }
+    .startup-overlay.activated .spark-1 { animation: sparkOut1 .72s ease-out .03s forwards; }
+    .startup-overlay.activated .spark-2 { animation: sparkOut2 .76s ease-out .04s forwards; }
+    .startup-overlay.activated .spark-3 { animation: sparkOut3 .68s ease-out .02s forwards; }
+    .startup-overlay.activated .spark-4 { animation: sparkOut4 .82s ease-out .05s forwards; }
+    .startup-overlay.activated .spark-5 { animation: sparkOut5 .8s ease-out .05s forwards; }
+    .startup-overlay.activated .spark-6 { animation: sparkOut6 .7s ease-out .03s forwards; }
+    .startup-overlay.activated .startup-copy,
+    .startup-overlay.activated .startup-prof,
+    .startup-overlay.activated .startup-grid-h,
+    .startup-overlay.activated .startup-grid-v,
+    .startup-overlay.activated .startup-frame-h,
+    .startup-overlay.activated .startup-frame-v {
+      transition: opacity .45s ease;
+      opacity: .1;
+    }
+
     .startup-grid-h,
     .startup-grid-v { position: absolute; z-index: 1; background: rgba(116,124,118,.65); }
     .startup-grid-h {
@@ -115,10 +269,38 @@
 
     @keyframes frameH { from { transform: scaleX(0); opacity: .2; } to { transform: scaleX(1); opacity: 1; } }
     @keyframes frameV { from { transform: scaleY(0); opacity: .2; } to { transform: scaleY(1); opacity: 1; } }
-    @keyframes copyIn { from { transform: translateY(18px); letter-spacing: .22em; opacity: 0; } to { transform: translateY(0); letter-spacing: .08em; opacity: 1; } }
+    @keyframes copyIn { from { transform: translateY(18px); letter-spacing: .22em; opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     @keyframes gridH { from { transform: translate(-50%, -50%) scaleX(0); opacity: 0; } to { transform: translate(-50%, -50%) scaleX(1); opacity: .8; } }
     @keyframes gridV { from { transform: translate(-50%, -50%) scaleY(0); opacity: 0; } to { transform: translate(-50%, -50%) scaleY(1); opacity: .8; } }
     @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes orbPulse {
+      0%, 100% { transform: scale(1); opacity: .95; }
+      50% { transform: scale(1.12); opacity: 1; }
+    }
+    @keyframes orbAura {
+      0%, 100% { opacity: .35; transform: translate(-50%, -50%) scale(0.9); }
+      50% { opacity: .7; transform: translate(-50%, -50%) scale(1.25); }
+    }
+    @keyframes orbRing {
+      0%, 100% { opacity: .22; transform: translate(-50%, -50%) scale(0.92); }
+      50% { opacity: .55; transform: translate(-50%, -50%) scale(1.08); }
+    }
+    @keyframes orbDust {
+      0% { transform: translate(-50%, -50%) rotate(0deg); opacity: .7; }
+      100% { transform: translate(-50%, -50%) rotate(360deg); opacity: .7; }
+    }
+    @keyframes burstExpand {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.2); }
+      12% { opacity: 1; }
+      55% { opacity: .96; transform: translate(-50%, -50%) scale(4.8); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(18); }
+    }
+    @keyframes sparkOut1 { from { opacity: 0; transform: translate(-50%, -50%) scale(.5); } to { opacity: 0; transform: translate(calc(-50% + 86px), calc(-50% - 34px)) scale(1.7);} }
+    @keyframes sparkOut2 { from { opacity: 0; transform: translate(-50%, -50%) scale(.5); } to { opacity: 0; transform: translate(calc(-50% - 72px), calc(-50% - 52px)) scale(1.55);} }
+    @keyframes sparkOut3 { from { opacity: 0; transform: translate(-50%, -50%) scale(.5); } to { opacity: 0; transform: translate(calc(-50% + 98px), calc(-50% + 44px)) scale(1.6);} }
+    @keyframes sparkOut4 { from { opacity: 0; transform: translate(-50%, -50%) scale(.5); } to { opacity: 0; transform: translate(calc(-50% - 96px), calc(-50% + 38px)) scale(1.8);} }
+    @keyframes sparkOut5 { from { opacity: 0; transform: translate(-50%, -50%) scale(.5); } to { opacity: 0; transform: translate(calc(-50% + 18px), calc(-50% - 96px)) scale(1.4);} }
+    @keyframes sparkOut6 { from { opacity: 0; transform: translate(-50%, -50%) scale(.5); } to { opacity: 0; transform: translate(calc(-50% - 20px), calc(-50% + 102px)) scale(1.65);} }
 
     .scroll-progress {
       position: fixed;
@@ -241,13 +423,15 @@
       opacity: 0;
       animation: fadeUp 1s ease forwards;
     }
-    .hero-kicker { animation-delay: 1.15s; color: var(--overlay-line); font-size: 11px; letter-spacing: .34em; text-transform: uppercase; margin-bottom: 20px; }
-    .hero-title { animation-delay: 1.42s; margin: 0; font-size: clamp(54px, 9vw, 96px); letter-spacing: -.04em; line-height: .94; font-weight: 600; }
-    .hero-text { animation-delay: 1.68s; margin-top: 28px; max-width: 680px; }
+    .hero-kicker { animation-delay: 0.32s; color: var(--overlay-line); font-size: 11px; letter-spacing: .34em; text-transform: uppercase; margin-bottom: 20px; }
+    .hero-title { animation-delay: 0.48s; margin: 0; }
+    .hero-title .cn { display: block; font-size: clamp(54px, 9vw, 98px); letter-spacing: -.08em; line-height: .95; font-weight: 600; }
+    .hero-title .en { display: block; margin-top: 14px; font-size: clamp(22px, 3vw, 38px); font-weight: 300; letter-spacing: .22em; text-transform: uppercase; color: #d8d5cd; }
+    .hero-text { animation-delay: 0.66s; margin-top: 28px; max-width: 680px; }
     .hero-text p:first-child { font-size: clamp(19px, 2.2vw, 30px); margin: 0 0 12px; line-height: 1.55; color: rgba(241,238,231,.92); }
     .hero-text p:last-child { margin: 0; max-width: 540px; line-height: 1.75; color: var(--overlay-line); font-size: 15px; }
     .hero-meta {
-      animation-delay: 1.94s;
+      animation-delay: 0.84s;
       border: 1px solid rgba(116,124,118,.45);
       background: rgba(255,255,255,.04);
       backdrop-filter: blur(8px);
@@ -498,10 +682,7 @@
       .footer-grid { grid-template-columns: 1fr 1fr; }
       .hero-inner { grid-template-columns: 1fr; gap: 28px; }
       .hero-meta { max-width: 520px; }
-      .hero-kicker, .hero-title, .hero-text, .hero-meta { animation-delay: 1.3s; }
-      .hero-title { animation-delay: 1.48s; }
-      .hero-text { animation-delay: 1.68s; }
-      .hero-meta { animation-delay: 1.9s; }
+      .startup-enter { right: 12vw; bottom: 58px; }
     }
     @media (max-width: 780px) {
       .desktop-nav { display: none; }
@@ -522,7 +703,19 @@
       .header-inner, .section-wrap { padding-left: 16px; padding-right: 16px; }
       .startup-frame-h { left: 5vw; right: 5vw; }
       .startup-frame-v { top: 10vh; bottom: 10vh; }
-      .startup-copy.kicker, .startup-copy.sub { letter-spacing: .18em; }
+      .startup-copy.kicker { letter-spacing: .2em; }
+      .startup-copy.name-en { letter-spacing: .12em; }
+      .startup-prof { letter-spacing: .04em; font-size: 13px; }
+      .startup-center { padding-bottom: 130px; }
+      .startup-enter {
+        left: 50%;
+        right: auto;
+        bottom: 44px;
+        transform: translateX(-50%);
+      }
+      .entry-orb-wrap { width: 72px; height: 72px; }
+      .entry-orb-ring { width: 72px; height: 72px; }
+      .entry-orb-ring-2 { width: 48px; height: 48px; }
     }
   </style>
 </head>
@@ -532,9 +725,31 @@
     <div class="startup-frame-h startup-frame-bottom"></div>
     <div class="startup-frame-v startup-frame-left"></div>
     <div class="startup-frame-v startup-frame-right"></div>
-    <div class="startup-copy kicker">VISUAL DESIGN PORTFOLIO</div>
-    <div class="startup-copy name">LILI LI</div>
-    <div class="startup-copy sub">Graphic Design / Branding / Motion</div>
+
+    <div class="startup-center">
+      <div class="startup-copy kicker">VISUAL DESIGN PORTFOLIO</div>
+      <div class="startup-copy name-cn">李栋</div>
+      <div class="startup-copy name-en">Li Dong</div>
+      <div class="startup-prof">视觉传达设计师<br />Visual Communication Designer</div>
+
+      <div class="startup-enter">
+        <div class="entry-orb-wrap">
+          <div class="entry-orb-ring"></div>
+          <div class="entry-orb-ring-2"></div>
+          <button class="entry-orb" id="entryOrb" aria-label="Enter portfolio"></button>
+          <div class="orb-burst"></div>
+          <span class="spark spark-1"></span>
+          <span class="spark spark-2"></span>
+          <span class="spark spark-3"></span>
+          <span class="spark spark-4"></span>
+          <span class="spark spark-5"></span>
+          <span class="spark spark-6"></span>
+        </div>
+        <div class="startup-enter-label">Click to enter</div>
+        <div class="startup-enter-sub">点亮入口，进入个人页面</div>
+      </div>
+    </div>
+
     <div class="startup-grid-h"></div>
     <div class="startup-grid-v"></div>
   </div>
@@ -543,7 +758,7 @@
 
   <header class="site-header" id="siteHeader">
     <div class="header-inner">
-      <a href="#hero" class="logo">LI<span>LI</span></a>
+      <a href="#hero" class="logo">LI<span>DONG</span></a>
       <nav class="desktop-nav">
         <a href="#hero">首页 <small>Home</small></a>
         <a href="#about">关于 <small>About</small></a>
@@ -560,7 +775,10 @@
     <div class="section-wrap hero-inner">
       <div>
         <div class="hero-kicker">Portfolio / Selected Works / 2026</div>
-        <h1 class="hero-title">LILI LI</h1>
+        <h1 class="hero-title">
+          <span class="cn">李栋</span>
+          <span class="en">Li Dong</span>
+        </h1>
         <div class="hero-text">
           <p>视觉传达设计师，关注品牌叙事、版式结构与情绪化视觉表达。</p>
           <p>Visual communication designer focusing on branding, editorial rhythm and image-led storytelling. I prefer a quiet, structured interface where the work itself carries the main voice.</p>
@@ -592,7 +810,7 @@
           <div class="panel">
             <div class="panel-kicker">Profile</div>
             <div class="facts-grid">
-              <p><span>姓名 Name</span>李栋 / Lili Li</p>
+              <p><span>姓名 Name</span>李栋 / Li Dong</p>
               <p><span>专业 Major</span>视觉传达设计 Visual Communication Design</p>
               <p><span>方向 Focus</span>品牌、平面、动态视觉</p>
               <p><span>状态 Status</span>Open to collaboration</p>
@@ -676,7 +894,7 @@
     <div class="section-wrap">
       <div class="footer-grid">
         <div>
-          <div class="logo">LI<span>LI</span></div>
+          <div class="logo">LI<span>DONG</span></div>
           <p style="margin-top: 10px;">Visual communication designer with a focus on branding, editorial rhythm and image-led storytelling.</p>
         </div>
         <div>
@@ -697,7 +915,7 @@
         </div>
       </div>
       <div class="footer-divider"></div>
-      <div class="copyright">© 2026 Lili Li. Preview version for color and opening effect review.</div>
+      <div class="copyright">© 2026 Li Dong. Preview version for opening interaction review.</div>
     </div>
   </footer>
 
@@ -783,10 +1001,20 @@
     reveals.forEach(el => observer.observe(el));
 
     const startupOverlay = document.getElementById('startupOverlay');
-    setTimeout(() => {
-      startupOverlay.classList.add('hide');
-      document.body.classList.remove('locked');
-    }, 2900);
+    const entryOrb = document.getElementById('entryOrb');
+    let entered = false;
+
+    function enterPortfolio() {
+      if (entered) return;
+      entered = true;
+      startupOverlay.classList.add('activated');
+      setTimeout(() => {
+        startupOverlay.classList.add('hide');
+        document.body.classList.remove('locked');
+      }, 820);
+    }
+
+    entryOrb.addEventListener('click', enterPortfolio);
   </script>
 </body>
 </html>

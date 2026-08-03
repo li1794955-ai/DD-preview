@@ -363,6 +363,118 @@
     .hero-button:hover em { color: var(--sage); }
     .hero-hint { position: absolute; right: 24px; bottom: 24px; z-index: 2; color: var(--overlay-line); font-size: 11px; text-transform: uppercase; letter-spacing: .24em; }
 
+    .about-hero-main {
+      display: grid;
+      grid-template-columns: 1.12fr .88fr;
+      gap: 48px;
+      align-items: center;
+      width: 100%;
+    }
+    .about-hero-title { margin: 0; }
+    .about-hero-title .cn {
+      display: block;
+      font-size: clamp(54px, 7.8vw, 92px);
+      line-height: .95;
+      font-weight: 600;
+      letter-spacing: -.04em;
+    }
+    .about-hero-title .en {
+      display: block;
+      margin-top: 14px;
+      font-size: clamp(20px, 2.6vw, 34px);
+      font-weight: 300;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: #d8d5cd;
+    }
+    .about-hero-lead {
+      margin: 28px 0 0;
+      max-width: 680px;
+      font-size: clamp(18px, 2vw, 25px);
+      line-height: 1.75;
+      color: rgba(241,238,231,.92);
+    }
+    .about-hero-en {
+      margin: 14px 0 0;
+      max-width: 620px;
+      color: var(--overlay-line);
+      line-height: 1.8;
+      font-size: 14px;
+    }
+    .about-hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .about-hero-tags span {
+      border: 1px solid rgba(116,124,118,.48);
+      padding: 9px 12px;
+      color: #c8cbc6;
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,.025);
+    }
+    .about-hero-side {
+      border: 1px solid rgba(116,124,118,.45);
+      background: rgba(255,255,255,.035);
+      backdrop-filter: blur(8px);
+      padding: 18px;
+      display: grid;
+      grid-template-columns: .88fr 1.12fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+    .about-hero-photo {
+      min-height: 330px;
+      border: 1px solid rgba(116,124,118,.45);
+      background: linear-gradient(145deg, rgba(116,133,121,.12), rgba(196,134,106,.08));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #9ea49f;
+      font-size: 11px;
+      line-height: 1.8;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-hero-photo::before {
+      content: '';
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(116,124,118,.22);
+    }
+    .about-hero-facts {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 8px 4px;
+    }
+    .about-hero-fact {
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(116,124,118,.25);
+    }
+    .about-hero-fact:last-child { border-bottom: 0; padding-bottom: 0; }
+    .about-hero-fact small {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--overlay-line);
+      font-size: 9px;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+    }
+    .about-hero-fact strong {
+      font-size: 14px;
+      line-height: 1.6;
+      font-weight: 400;
+      color: var(--overlay-text);
+    }
+
     section.content-section { padding: 92px 0; }
     section.alt { background: var(--paper-alt); }
     .section-head { display: flex; align-items: center; gap: 18px; margin-bottom: 48px; }
@@ -433,6 +545,8 @@
       .hero-inner { grid-template-columns: 1fr; gap: 28px; }
       .hero-meta { max-width: 520px; }
       .startup-enter { right: 12vw; bottom: 58px; }
+      .about-hero-main { grid-template-columns: 1fr; gap: 26px; }
+      .about-hero-side { max-width: 700px; }
     }
     @media (max-width: 780px) {
       .desktop-nav { display: none; }
@@ -459,6 +573,10 @@
       .entry-orb-wrap { width: 72px; height: 72px; }
       .entry-orb-ring { width: 72px; height: 72px; }
       .entry-orb-ring-2 { width: 48px; height: 48px; }
+      .about-hero-side { grid-template-columns: 1fr; }
+      .about-hero-photo { min-height: 300px; }
+      .about-hero-facts { display: grid; grid-template-columns: 1fr 1fr; }
+      .about-hero-title .en { letter-spacing: .12em; }
     }
   </style>
 </head>
@@ -496,9 +614,9 @@
 
   <header class="site-header" id="siteHeader">
     <div class="header-inner">
-      <a href="#hero" class="logo">LI<span>DONG</span></a>
+      <a href="#about" class="logo">LI<span>DONG</span></a>
       <nav class="desktop-nav">
-        <a href="#hero">首页 <small>Home</small></a>
+        <a href="#about">首页 <small>Home</small></a>
         <a href="#about">关于 <small>About</small></a>
         <a href="#works">作品 <small>Works</small></a>
         <a href="#contact">联系 <small>Contact</small></a>
@@ -506,71 +624,54 @@
     </div>
   </header>
 
-  <section class="hero" id="hero">
+  <section class="hero" id="about">
     <div class="hero-frame"></div>
     <div class="hero-line top"></div>
     <div class="hero-line bottom"></div>
     <div class="section-wrap hero-inner">
-      <div>
-        <div class="hero-kicker">Portfolio / Selected Works / 2026</div>
-        <h1 class="hero-title">
-          <span class="cn"><span class="char">李</span><span class="char">栋</span></span>
-          <span class="en">Li Dong</span>
-        </h1>
-        <div class="hero-text">
-          <p>视觉传达设计师，关注品牌叙事、版式结构与情绪化视觉表达。</p>
-          <p>Visual communication designer focusing on branding, editorial rhythm and image-led storytelling. I prefer a quiet, structured interface where the work itself carries the main voice.</p>
+      <div class="about-hero-main">
+        <div>
+          <div class="hero-kicker">About / Profile / Visual Designer</div>
+          <h1 class="about-hero-title hero-title">
+            <span class="cn">关于我</span>
+            <span class="en">About Li Dong</span>
+          </h1>
+          <p class="about-hero-lead hero-text">我是一名视觉传达设计师，关注品牌叙事、版式结构与情绪化视觉表达。我希望让画面既有秩序，也有温度。</p>
+          <p class="about-hero-en hero-text">I am a visual communication designer focusing on branding, editorial rhythm and image-led storytelling. My work turns research, emotion and structure into clear, memorable visual systems.</p>
+          <div class="about-hero-tags hero-text">
+            <span>Graphic Design</span>
+            <span>Branding</span>
+            <span>Motion</span>
+            <span>Visual Strategy</span>
+          </div>
         </div>
-      </div>
-      <div class="hero-meta">
-        <div class="meta-kicker">Focus</div>
-        <p>Graphic Design / Branding / Motion / Visual Strategy</p>
-        <div class="meta-kicker">Approach</div>
-        <p>在安静而克制的页面语境里，让作品自己说话。</p>
-        <a href="#works" class="hero-button">View Works <em>01</em></a>
-      </div>
-    </div>
-    <div class="hero-hint">Scroll to explore</div>
-  </section>
 
-  <section class="content-section" id="about">
-    <div class="section-wrap reveal">
-      <div class="section-head">
-        <div class="line"></div>
-        <h2>关于我 <span>About</span></h2>
-        <div class="line"></div>
-      </div>
-      <div class="about-grid">
-        <div class="about-photo">
-          <div class="photo-inner">你的照片后续可替换<br />Photo Placeholder</div>
-        </div>
-        <div class="about-panels">
-          <div class="panel">
-            <div class="panel-kicker">Profile</div>
-            <div class="facts-grid">
-              <p><span>姓名 Name</span>李栋 / Li Dong</p>
-              <p><span>专业 Major</span>视觉传达设计 Visual Communication Design</p>
-              <p><span>方向 Focus</span>品牌、平面、动态视觉</p>
-              <p><span>状态 Status</span>Open to collaboration</p>
+        <div class="about-hero-side hero-meta">
+          <div class="about-hero-photo">
+            你的照片后续替换<br />Portrait Placeholder
+          </div>
+          <div class="about-hero-facts">
+            <div class="about-hero-fact">
+              <small>Name / 姓名</small>
+              <strong>李栋<br />Li Dong</strong>
             </div>
-          </div>
-          <div class="panel">
-            <div class="panel-kicker">Statement</div>
-            <p class="panel-text">我希望把设计做成一种可被感知的叙事：既有秩序，也有温度。我的兴趣集中在品牌视觉、版式结构、广告表达与动态呈现，擅长从调研与情绪出发，整理出更清晰、更有记忆点的画面语言。</p>
-            <p class="panel-sub">I build visual stories with structure and emotion, turning ideas into clear, memorable systems across branding, editorial design and motion.</p>
-          </div>
-          <div class="panel contact-list">
-            <div class="panel-kicker terracotta">Contact Snapshot</div>
-            <div class="facts-grid">
-              <p><span>Phone</span>15523957239</p>
-              <p><span>Email</span>1303212579@qq.com</p>
-              <p><span>QQ</span>1303212579</p>
-              <p><span>Location</span>China</p>
+            <div class="about-hero-fact">
+              <small>Major / 专业</small>
+              <strong>视觉传达设计<br />Visual Communication Design</strong>
+            </div>
+            <div class="about-hero-fact">
+              <small>Focus / 方向</small>
+              <strong>品牌、平面、动态视觉</strong>
+            </div>
+            <div class="about-hero-fact">
+              <small>Status / 状态</small>
+              <strong>Open to collaboration</strong>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <div class="hero-hint">Scroll to explore works</div>
   </section>
 
   <section class="content-section alt" id="works">

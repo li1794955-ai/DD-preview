@@ -20,15 +20,15 @@
   --max:1180px;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;overflow-x:hidden;-webkit-overflow-scrolling:touch}
 body{
   margin:0;
   background:var(--paper);
   color:var(--ink);
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
   overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
 }
-body.lock{overflow:hidden}
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
 button{font:inherit;cursor:pointer}
@@ -286,15 +286,14 @@ section{scroll-margin-top:88px}
 
 /* Opening */
 .opening{
-  position:fixed;inset:0;z-index:99;
+  position:fixed;inset:0;z-index:999;
   background:radial-gradient(circle at 52% 55%,rgba(116,133,121,.12),transparent 22%),#151816;
-  color:var(--light);display:grid;place-items:center;overflow:hidden;
-  transition:opacity .7s ease,visibility .7s ease;
+  color:var(--light);display:grid;place-items:center;
+  transition:opacity .6s ease,transform .6s ease;
   cursor:pointer;
   -webkit-tap-highlight-color:transparent;
-  touch-action:manipulation;
 }
-.opening.hide{opacity:0;visibility:hidden;pointer-events:none}
+.opening.hide{opacity:0;transform:translateY(-100%);pointer-events:none;visibility:hidden}
 .opening:before{
   content:"";position:absolute;inset:0;
   background-image:linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),
@@ -473,7 +472,7 @@ section{scroll-margin-top:88px}
 }
 </style>
 </head>
-<body class="lock">
+<body>
 
 <!-- Opening Screen -->
 <div class="opening" id="opening">
@@ -717,24 +716,27 @@ section{scroll-margin-top:88px}
 </div>
 
 <script>
-// Opening animation
+// Opening animation - 不锁定body，确保手机端可以滚动
 const opening=document.getElementById('opening'),spark=document.getElementById('spark');
 let done=false;
 
 function enterSite(){
   if(done)return;done=true;
-  const r=spark.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
-  for(let i=0;i<16;i++){
-    const p=document.createElement('i');p.className='particle';document.body.appendChild(p);
-    p.style.left=cx+'px';p.style.top=cy+'px';
-    const a=Math.PI*2*i/16+Math.random()*.18,d=65+Math.random()*105,
-          x=Math.cos(a)*d,y=Math.sin(a)*d;
-    p.animate([
-      {transform:'translate(-50%,-50%) scale(1)',opacity:1},
-      {transform:`translate(calc(-50% + ${x}px),calc(-50% + ${y}px)) scale(0)`,opacity:0}
-    ],{duration:700+Math.random()*300,easing:'cubic-bezier(.2,.7,.3,1)',fill:'forwards'});
-  }
-  setTimeout(()=>{opening.classList.add('hide');document.body.classList.remove('lock')},400);
+  try{
+    const r=spark.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+    for(let i=0;i<16;i++){
+      const p=document.createElement('i');p.className='particle';document.body.appendChild(p);
+      p.style.left=cx+'px';p.style.top=cy+'px';
+      const a=Math.PI*2*i/16+Math.random()*.18,d=65+Math.random()*105,
+            x=Math.cos(a)*d,y=Math.sin(a)*d;
+      p.animate([
+        {transform:'translate(-50%,-50%) scale(1)',opacity:1},
+        {transform:`translate(calc(-50% + ${x}px),calc(-50% + ${y}px)) scale(0)`,opacity:0}
+      ],{duration:700+Math.random()*300,easing:'cubic-bezier(.2,.7,.3,1)',fill:'forwards'});
+    }
+  }catch(e){}
+  opening.classList.add('hide');
+  setTimeout(()=>{opening.style.display='none';},600);
 }
 
 // 点击按钮进入
@@ -745,14 +747,13 @@ opening.addEventListener('click',enterSite);
 
 // 触摸滑动进入（手机端）
 let touchStartY=0;
-opening.addEventListener('touchstart',(e)=>{touchStartY=e.touches[0].clientY},{passive:true});
+opening.addEventListener('touchstart',(e)=>{touchStartY=e.touches[0].clientY;},{passive:true});
 opening.addEventListener('touchend',(e)=>{
-  const touchEndY=e.changedTouches[0].clientY;
-  if(Math.abs(touchStartY-touchEndY)>30)enterSite();
+  if(Math.abs(e.changedTouches[0].clientY-touchStartY)>20)enterSite();
 },{passive:true});
 
-// 5秒后自动进入
-setTimeout(enterSite,5000);
+// 4秒后自动进入
+setTimeout(enterSite,4000);
 
 // 按任意键进入
 document.addEventListener('keydown',enterSite,{once:true});

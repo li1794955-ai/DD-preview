@@ -290,6 +290,9 @@ section{scroll-margin-top:88px}
   background:radial-gradient(circle at 52% 55%,rgba(116,133,121,.12),transparent 22%),#151816;
   color:var(--light);display:grid;place-items:center;overflow:hidden;
   transition:opacity .7s ease,visibility .7s ease;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
 }
 .opening.hide{opacity:0;visibility:hidden;pointer-events:none}
 .opening:before{
@@ -384,29 +387,89 @@ section{scroll-margin-top:88px}
 }
 
 /* Responsive */
+@media(max-width:1024px){
+  .heroGrid{grid-template-columns:1fr;gap:30px;padding:50px 0}
+  .heroMeta{max-width:100%}
+}
 @media(max-width:900px){
-  .heroGrid,.aboutGrid,.project{grid-template-columns:1fr}
-  .heroGrid{padding:62px 0}
-  .detail{grid-template-columns:1fr}
+  .aboutGrid,.project{grid-template-columns:1fr}
+  .detail{grid-template-columns:1fr 1fr 1fr}
   .archive{grid-template-columns:1fr}
   .footbox{align-items:flex-start;flex-direction:column}
-  .lightbox-nav{width:40px;height:40px;font-size:18px}
+  .lightbox-nav{width:44px;height:44px;font-size:20px}
   .lightbox-prev{left:12px}
   .lightbox-next{right:12px}
+  .head h2{font-size:clamp(30px,6vw,48px)}
 }
-@media(max-width:650px){
-  .wrap{width:calc(100% - 24px)}
-  .nav a .en{display:none}
-  .nav{gap:14px;font-size:14px}
-  .hero h1{letter-spacing:.09em}
-  .hero h1 small{letter-spacing:.28em}
-  .lead{font-size:16px}
-  .section{padding:76px 0}
-  .facts{grid-template-columns:1fr}
-  .project{padding:13px;gap:18px}
-  .footbox{padding:21px}
-  .openInner h1{letter-spacing:.18em;padding-left:.18em}
+@media(max-width:768px){
+  .wrap{width:calc(100% - 32px)}
+  .section{padding:60px 0}
+  .hero{min-height:auto}
+  .heroGrid{min-height:auto;padding:40px 0}
+  .hero h1{font-size:clamp(48px,12vw,80px);letter-spacing:.1em}
+  .hero h1 small{font-size:14px;letter-spacing:.3em;margin-top:14px}
+  .lead{font-size:15px;line-height:1.8;margin-top:20px}
+  .heroMeta{padding:22px}
+  .heroMeta p{font-size:14px;margin-bottom:16px}
+  .head{margin-bottom:30px}
+  .head h2{font-size:clamp(28px,7vw,42px)}
+  .head h2 .en{font-size:11px;margin-top:8px}
+  .label{font-size:10px;margin-bottom:10px}
+  .aboutGrid{gap:28px}
+  .portrait{padding:10px}
+  .bio{font-size:15px;line-height:1.85}
+  .facts{gap:10px;margin-top:18px}
+  .fact{padding:14px}
+  .fact small{font-size:11px;margin-bottom:5px}
+  .fact strong{font-size:13px}
+  .project{padding:14px;gap:16px}
+  .project h3{font-size:clamp(22px,5vw,28px);margin:8px 0 6px}
+  .project h3 small{font-size:11px;margin-top:6px}
+  .project>div>p{font-size:14px;line-height:1.8;margin:12px 0}
+  .num{font-size:10px}
+  .detail{gap:8px;margin-top:14px}
+  .detail b{font-size:11px;margin-bottom:5px}
+  .detail span{font-size:12px}
+  .mini h3{font-size:20px}
+  .mini p{font-size:13px}
+  .footbox{padding:20px}
+  .footbox h2{font-size:22px}
+  .footbox p{font-size:13px}
+  .tel{font-size:13px;padding:10px 12px}
+  .openInner h1{font-size:clamp(56px,15vw,100px);letter-spacing:.2em;padding-left:.2em}
+  .openInner p{font-size:11px;margin-top:16px}
+  .spark{width:90px;height:90px;margin:45px auto 0}
+  .spark small{font-size:9px}
   .shot .zoom-hint{display:none}
+  .nav{gap:12px;font-size:13px}
+  .nav a .en{display:none}
+  .logo{font-size:14px}
+  .headin{min-height:58px}
+  section{scroll-margin-top:70px}
+}
+@media(max-width:480px){
+  .wrap{width:calc(100% - 24px)}
+  .section{padding:48px 0}
+  .hero h1{font-size:clamp(42px,14vw,64px)}
+  .hero h1 small{font-size:12px;letter-spacing:.25em}
+  .lead{font-size:14px}
+  .heroMeta{padding:18px}
+  .heroMeta p{font-size:13px;margin-bottom:14px}
+  .metaLabel{font-size:10px}
+  .btn{padding:11px 14px;font-size:10px}
+  .head h2{font-size:clamp(26px,8vw,36px)}
+  .bio{font-size:14px;line-height:1.8}
+  .facts{grid-template-columns:1fr}
+  .detail{grid-template-columns:1fr}
+  .project{padding:12px;gap:14px}
+  .project h3{font-size:clamp(20px,6vw,24px)}
+  .nav{gap:10px;font-size:12px}
+  .openInner h1{font-size:clamp(48px,16vw,80px)}
+  .spark{width:80px;height:80px;margin:40px auto 0}
+  .lightbox-nav{width:40px;height:40px;font-size:18px}
+  .lightbox-close{width:40px;height:40px;font-size:18px;top:16px;right:16px}
+  .lightbox-title{font-size:12px;top:16px}
+  .lightbox-counter{font-size:12px;bottom:16px}
 }
 </style>
 </head>
@@ -657,7 +720,8 @@ section{scroll-margin-top:88px}
 // Opening animation
 const opening=document.getElementById('opening'),spark=document.getElementById('spark');
 let done=false;
-spark.addEventListener('click',()=>{
+
+function enterSite(){
   if(done)return;done=true;
   const r=spark.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
   for(let i=0;i<16;i++){
@@ -671,7 +735,27 @@ spark.addEventListener('click',()=>{
     ],{duration:700+Math.random()*300,easing:'cubic-bezier(.2,.7,.3,1)',fill:'forwards'});
   }
   setTimeout(()=>{opening.classList.add('hide');document.body.classList.remove('lock')},400);
-});
+}
+
+// 点击按钮进入
+spark.addEventListener('click',(e)=>{e.stopPropagation();enterSite();});
+
+// 点击开屏页面任意位置进入
+opening.addEventListener('click',enterSite);
+
+// 触摸滑动进入（手机端）
+let touchStartY=0;
+opening.addEventListener('touchstart',(e)=>{touchStartY=e.touches[0].clientY},{passive:true});
+opening.addEventListener('touchend',(e)=>{
+  const touchEndY=e.changedTouches[0].clientY;
+  if(Math.abs(touchStartY-touchEndY)>30)enterSite();
+},{passive:true});
+
+// 5秒后自动进入
+setTimeout(enterSite,5000);
+
+// 按任意键进入
+document.addEventListener('keydown',enterSite,{once:true});
 
 // Lightbox data
 const worksData={
